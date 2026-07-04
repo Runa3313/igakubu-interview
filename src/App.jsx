@@ -364,9 +364,7 @@ ${univ.commonQuestions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
           .feedback-panel { display: none !important; }
           .header-pc-score { display: none !important; }
         }
-        @media (min-width: 769px) {
-          .score-fab { display: none !important; }
-        }
+      
       `}</style>
 
       {/* Header */}
@@ -380,12 +378,22 @@ ${univ.commonQuestions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
             </div>
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            {/* スマホ用丸スコアボタン */}
-            {(phase === "interview" || phase === "done") && allFeedbacks.length > 0 && (
-              <button className="score-fab" onClick={() => setScoreModalOpen(true)}
-                style={{ width: 48, height: 48, borderRadius: "50%", background: avgScore >= 75 ? "#059669" : avgScore >= 55 ? "#d97706" : "#dc2626", border: "none", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 2px 8px rgba(0,0,0,0.2)" }}>
-                <span style={{ fontSize: 14, fontWeight: 700, lineHeight: 1 }}>{avgScore}</span>
-                <span style={{ fontSize: 9, opacity: 0.85, lineHeight: 1 }}>pt</span>
+           {/* スコアボタン（スマホ・PC共通） */}
+            {(phase === "interview" || phase === "done") && (
+              <button onClick={() => setScoreModalOpen(true)}
+                style={{
+                  width: 72, height: 72, borderRadius: "50%",
+                  background: avgScore >= 75 ? "#059669" : avgScore >= 55 ? "#d97706" : "#dc2626",
+                  border: "none", color: "#fff",
+                  display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
+                  cursor: "pointer", boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
+                  transition: "transform 0.15s", flexShrink: 0,
+                }}
+                onMouseEnter={e => e.currentTarget.style.transform = "scale(1.05)"}
+                onMouseLeave={e => e.currentTarget.style.transform = "scale(1)"}
+              >
+                <span style={{ fontSize: 22, fontWeight: 700, lineHeight: 1 }}>{avgScore}</span>
+                <span style={{ fontSize: 10, opacity: 0.9, lineHeight: 1.4 }}>総合スコア</span>
               </button>
             )}
             {/* PC用ボタン類 */}
