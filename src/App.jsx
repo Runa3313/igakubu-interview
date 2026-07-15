@@ -355,6 +355,29 @@ ${univ.commonQuestions.map((q, i) => `${i + 1}. ${q}`).join("\n")}
             </div>
           </div>
           <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+            {/* 時間制タイマー */}
+            {(phase === "interview" || phase === "done") && modeChoice === "time" && (
+              <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 4 }}>
+                <div style={{
+                  fontFamily: "monospace", fontSize: 22, fontWeight: 900, lineHeight: 1,
+                  color: secondsLeft / (univ?.duration * 60) > 0.5 ? "#059669"
+                       : secondsLeft / (univ?.duration * 60) > 0.25 ? C.orange
+                       : C.red,
+                }}>
+                  {Math.floor(secondsLeft / 60)}:{String(secondsLeft % 60).padStart(2, "0")}
+                </div>
+                <div style={{ width: 60, height: 4, background: C.border, borderRadius: 2, overflow: "hidden" }}>
+                  <div style={{
+                    height: "100%", borderRadius: 2, transition: "width 1s linear",
+                    width: `${(secondsLeft / (univ?.duration * 60)) * 100}%`,
+                    background: secondsLeft / (univ?.duration * 60) > 0.5 ? "#059669"
+                              : secondsLeft / (univ?.duration * 60) > 0.25 ? C.orange
+                              : C.red,
+                  }} />
+                </div>
+                <div style={{ fontSize: 9, color: C.muted, letterSpacing: "0.05em" }}>残り時間</div>
+              </div>
+            )}
             {(phase === "interview" || phase === "done") && (
               <button onClick={() => setScoreModalOpen(true)}
                 style={{ width: 72, height: 72, borderRadius: "50%", background: avgScore >= 75 ? "#059669" : avgScore >= 55 ? C.orange : C.red, border: "none", color: "#fff", display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", cursor: "pointer", boxShadow: "0 4px 14px rgba(0,0,0,0.15)", transition: "transform 0.15s", flexShrink: 0 }}
